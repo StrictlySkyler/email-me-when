@@ -14,3 +14,5 @@ $ emw -h
     -p, --password [password]                   Password for the SMTP server username
     -r, --recipients [foo@bar.com,baz@bar.com]  Recipients to email.  Defaults to the SMTP username.
 ```
+
+Installation: `npm i -g emw`
