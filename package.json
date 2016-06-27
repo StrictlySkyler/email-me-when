@@ -9,7 +9,7 @@
     "moment": "^2.13.0",
     "nodemailer": "^2.4.2"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Executes a CLI task, and emails you when it finishes, duration included.",
   "main": "emw",
   "repository": {

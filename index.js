@@ -16,21 +16,24 @@ var text;
 var transporter;
 
 program
-  .version('1.0.0')
+  .version('1.0.1')
   .usage('[options] "<command to execute>"')
   .description(
     'email-me-when: ' +
     'A simple utility which executes a command and emails you when it finishes.'
   )
-  .option('-s, --smtp [smtp.gmail.com]', 'The DNS record for the SMTP server.')
+  .option(
+    '-s, --smtp [smtp.gmail.com]',
+    'The DNS record for the SMTP server.  Required.'
+  )
   .option(
     '-u, --user [ex@ample.com]',
-    'The username for the SMTP server.',
+    'The username for the SMTP server. Required.',
     encodeURIComponent
   )
   .option(
     '-p, --password [password]',
-    'Password for the SMTP server username',
+    'Password for the SMTP server username.  Required.',
     encodeURIComponent
   )
   .option(
@@ -44,6 +47,15 @@ program
   })
   .parse(process.argv)
 ;
+
+if (
+  ! program.user ||
+  ! program.password ||
+  ! program.smtp ||
+  ! command_to_execute
+) {
+  program.help();
+}
 
 if (program.recipients) {
   recipients = program.recipients.split(',').join(', ');
