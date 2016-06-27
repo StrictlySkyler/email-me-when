@@ -19,6 +19,7 @@ program
   .version('1.0.0')
   .usage('[options] "<command to execute>"')
   .description(
+    'email-me-when: ' +
     'A simple utility which executes a command and emails you when it finishes.'
   )
   .option('-s, --smtp [smtp.gmail.com]', 'The DNS record for the SMTP server.')
@@ -34,7 +35,7 @@ program
   )
   .option(
     '-r, --recipients [foo@bar.com,baz@bar.com]', 'Recipients to email.  ' +
-      'Defaults to the username used for the SMTP server.'
+      'Defaults to the SMTP username.'
   )
   .action(function () {
     var args = Array.prototype.slice.call(arguments);
