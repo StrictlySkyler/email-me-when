@@ -1,0 +1,31 @@
+{
+  "name": "email-me-when",
+  "bin": {
+    "emw": "index.js"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "emailjs": "^1.0.5",
+    "moment": "^2.13.0",
+    "nodemailer": "^2.4.2"
+  },
+  "version": "1.0.0",
+  "description": "Executes a CLI task, and emails you when it finishes, duration included.",
+  "main": "emw",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StrictlySkyler/email-me-when.git"
+  },
+  "keywords": [
+    "notify",
+    "email",
+    "execute",
+    "cli"
+  ],
+  "author": "Skyler Brungardt <skyler.brungardt@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/StrictlySkyler/email-me-when/issues"
+  },
+  "homepage": "https://github.com/StrictlySkyler/email-me-when#readme"
+}
