@@ -1,5 +1,5 @@
 {
-  "name": "email-me-when",
+  "name": "emw",
   "bin": {
     "emw": "index.js"
   },
