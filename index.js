@@ -3,7 +3,7 @@
 var program = require('commander');
 var nodemailer = require('nodemailer');
 var os = require('os');
-var exec = require('child_process').execSync;
+var exec = require('child_process').exec;
 var moment = require('moment');
 var command_to_execute;
 var message;
@@ -11,12 +11,12 @@ var recipients;
 var start;
 var end;
 var duration;
-var exit_code = 0;
 var text;
 var transporter;
+var command;
 
 program
-  .version('1.0.1')
+  .version('1.0.2')
   .usage('[options] "<command to execute>"')
   .description(
     'email-me-when: ' +
@@ -43,7 +43,8 @@ program
   .action(function () {
     var args = Array.prototype.slice.call(arguments);
     args.pop();
-    command_to_execute = args.join(' ');
+    args = args[0];
+    command_to_execute = args;
   })
   .parse(process.argv)
 ;
@@ -73,32 +74,43 @@ message = {
 
 start = Date.now();
 
-try {
-  exec(command_to_execute);
+command = exec(command_to_execute);
 
-} catch (err) {
+command.stdout.setEncoding('utf8');
+command.stderr.setEncoding('utf8');
 
-  exit_code = err.status;
-} finally {
+command.stdout.on('data', function (data) {
+  console.log(data);
+});
+
+command.stderr.on('data', function (data) {
+  console.error(data);
+});
+
+command.on('exit', function (code) {
 
   end = Date.now();
   duration = moment.duration(end - start);
-}
 
-text = 'Task started: ' +
-  moment(start).format("dddd, MMMM Do YYYY, h:mm:ss a") + '\n' +
-  'Task ended: ' + moment(end).format("dddd, MMMM Do YYYY, h:mm:ss a") + '\n' +
-  'Duration: ' + duration.humanize() + '\n' +
-  'Exit code: ' + exit_code
-;
+  text = 'Started: ' +
+    moment(start).format("dddd, MMMM Do YYYY, h:mm:ss a") + '\n' +
+    'Ended: ' + moment(end).format("dddd, MMMM Do YYYY, h:mm:ss a") + '\n' +
+    'Duration: ' + duration.humanize() + '\n' +
+    'Exit code: ' + code
+  ;
 
-message.text = text;
+  console.log('Results for:', command_to_execute);
+  console.log(text);
 
-transporter.sendMail(message, function (err, info) {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log('Message sent.', info.response);
-  }
+  message.text = text;
 
+  transporter.sendMail(message, function (err, info) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('Message sent.', info.response);
+    }
+
+  });
 });
+
