@@ -16,3 +16,18 @@ $ emw -h
 ```
 
 Installation: `npm i -g emw`
+
+Given an example usage such as:
+
+```
+emw -s smtp.gmail.com -u example@gmail.com -p "example password" -r you@example.com "sleep 5; exit 0;"
+```
+
+You would receive an email titled: "Task exited: sleep 5; exit 0;", with the following contents:
+
+Started: Wednesday, July 27th 2016, 9:08:28 am
+Ended: Wednesday, July 27th 2016, 9:08:33 am
+Duration: a few seconds
+Exit code: 0
+
+Enjoy!
